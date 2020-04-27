@@ -6,16 +6,12 @@ const app = express();
 const routes = require("./src/routes");
 const database = require("./config/database");
 
-// const httpProxy = require("express-http-proxy");
-// const cookieParser = require("cookie-parser");
-
 app.use(logger("dev"));
 app.use(helmet());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-// app.use(cookieParser());
 
-app.get("/", (req, res) => res.json("HELLO"));
+app.get("/hello", (req, res) => res.json("HELLO"));
 app.use("/", routes);
 
 database
