@@ -1,10 +1,24 @@
 const mongoose = require("mongoose");
+const { encryptPassword } = require("../services/cryptography");
 
 const userSchema = new mongoose.Schema({
   name: String,
-  email: String,
-  passworld: String,
-  avatar: String,
+  email: {
+    type: String,
+    unique: true,
+  },
+  password: String,
+  avatar: {
+    type: String,
+    default:
+      "https://res.cloudinary.com/ddtdxeaxl/image/upload/v1588001400/f4a6ca4e-cbfd-437b-89df-78a5b4c0c65d_axmusu.jpg",
+  },
+});
+
+userSchema.pre("save", function (next) {
+  const self = this;
+  self.password = encryptPassword(self.password);
+  next();
 });
 
 const User = mongoose.model("User", userSchema);

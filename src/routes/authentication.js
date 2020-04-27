@@ -1,24 +1,9 @@
 const router = require("express").Router();
-const jwt = require("jsonwebtoken");
+const AutheticationService = require("../services/authentication");
 const userModel = require("../models/User");
+const authenticationService = new AutheticationService(userModel);
 
-router.post("/login", (req, res) => {
-  const { email, password } = req.body;
-  if (email && password) {
-    const user = userModel.find({ email });
-
-    if (!user) return res.sendStatus(401);
-
-    var token = jwt.sign({ id: user._id }, process.env.SECRET);
-
-    res.status(200).send({ auth: true, token: token });
-  }
-
-  res.sendStatus(401);
-});
-
-router.get("/logout", (req, res) => {
-  res.status(200).send({ auth: false, token: null });
-});
+router.post("/login", (req, res) => authenticationService.login(req, res));
+router.get("/logout", (req, res) => authenticationService.logout(req, res));
 
 module.exports = router;

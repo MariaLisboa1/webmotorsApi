@@ -6,8 +6,13 @@ class UserController {
   }
 
   async create(req, res) {
-    const user = await this.user.create(req.body);
-    res.status(201).send(user);
+    try {
+      const user = new this.user(req.body);
+      await user.save();
+      res.status(201).send(user);
+    } catch (err) {
+      res.status(422).send({ error: err.message });
+    }
   }
 
   async getById(req, res) {
