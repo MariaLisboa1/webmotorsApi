@@ -10,7 +10,6 @@ class Auth {
     const { email, password } = req.body;
     if (email && password) {
       const user = await this.user.findOne({ email: email });
-      console.log("USER", user);
 
       if (!user || !verifyPassword(password, user.password)) {
         return res.sendStatus(401);
