@@ -6,12 +6,14 @@ const express = require("express");
 const logger = require("morgan");
 const helmet = require("helmet");
 const app = express();
+const cors = require("cors");
 const routes = require("./src/routes");
 const database = require("./config/database");
 
 app.use(logger("dev"));
 app.use(helmet());
 app.use(express.json());
+app.use(cors());
 app.use(express.urlencoded({ extended: false }));
 
 app.get("/hello", (req, res) => res.json("HELLO"));
