@@ -7,8 +7,15 @@ class UserController {
 
   async create(req, res) {
     try {
-      const user = new this.user(req.body);
+      let user = await this.user.findOne({ email: req.body.email });
+
+      if (user) {
+        return res.status(400).send({ error: "User already registered" });
+      }
+
+      user = new this.user(req.body);
       await user.save();
+
       res.status(201).send(user);
     } catch (err) {
       res.status(422).send({ error: err.message });

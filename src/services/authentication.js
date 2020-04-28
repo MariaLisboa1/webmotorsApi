@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken");
-const { verifyPassword } = require("../services/cryptography");
+const bcrypt = require("bcrypt");
 
 class Auth {
   constructor(userModel) {
@@ -11,8 +11,8 @@ class Auth {
     if (email && password) {
       const user = await this.user.findOne({ email: email });
 
-      if (!user || !verifyPassword(password, user.password)) {
-        return res.sendStatus(401);
+      if (!user || !(await bcrypt.compare(password, user.password))) {
+        return res.status(401).send({ error: "email or password is wrong" });
       }
 
       var token = jwt.sign({ id: user._id }, process.env.SECRET);
@@ -20,7 +20,7 @@ class Auth {
       return res.status(200).send({ auth: true, token: token });
     }
 
-    return res.sendStatus(401);
+    return res.status(401).send({ error: "email or password is wrong" });
   }
 
   logout(req, res) {
