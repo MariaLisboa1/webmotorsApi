@@ -1,4 +1,4 @@
-# Api para o teste da webmotors
+# API for testing webmotors
 
 > ## Routes
 
@@ -47,7 +47,7 @@
 
 3. ✅ PUT /users/avatar/:id
 
-   - Request: `/users/avatar/{userId}` enviando a imagem de avatar do usuario
+   - Request: `/users/avatar/{userId}` uploading the user's avatar image
 
    - response 204
 
@@ -198,9 +198,9 @@
    }
    ```
 
-> ## Exceções
+> ## Exceptions
 
-1. ✅ Retorna erro **404** se o dado não existir
-2. ✅ Retorna erro **400** se passal algum dado invalido
-3. ✅ Retorna erro **401** se não estiver autenticado
-4. ✅ Retorna erro **500** caso o servidor esteja com problemas
+1. ✅ Returns error **404** if the data does not exist
+2. ✅ Returns error **400** if any invalid data is passed
+3. ✅ Returns error **401** if not authenticated
+4. ✅ Returns error **500** if the server is having problems
